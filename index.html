@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Loading...</title>
-<!-- 无 JavaScript 时提供明确的手动跳转链接 -->
+<!-- JavaScript 关闭时，同样在 3 秒后跳转 -->
+<noscript><meta http-equiv="refresh" content="3;url=https://ipay9aus.co/RFIPAY9SSS"></noscript>
 <style>
 :root{--ink:#fff4e6;--mute:#c9b6c4;--star:#fff2c9;--glow:#ffb86b}
 *{box-sizing:border-box}
@@ -61,17 +62,6 @@ body.out{opacity:0}
 .skip.show{opacity:1;pointer-events:auto}
 @media (prefers-reduced-motion:reduce){.sky i,.sun,.star .halo{animation:none}}
 
-/* Interactive slider; background and stars stay unobstructed */
-.slider{position:relative;z-index:5;width:min(390px,calc(100vw - 40px));height:66px;border:1px solid rgba(255,236,195,.48);border-radius:40px;background:rgba(7,12,34,.66);box-shadow:0 10px 35px rgba(0,0,0,.26),inset 0 0 16px rgba(255,205,138,.1);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);touch-action:pan-y;user-select:none;overflow:hidden;margin-top:16px}
-.slider-fill{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,rgba(255,150,89,.48),rgba(255,224,157,.48));pointer-events:none}
-.slider-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:46px;color:#fff4dc;font-size:12px;font-weight:700;letter-spacing:.12em;pointer-events:none;white-space:nowrap}
-.slider-knob{position:absolute;left:5px;top:5px;width:54px;height:54px;border:none;border-radius:50%;background:linear-gradient(135deg,#fff0bc,#f4a75d);color:#43223c;font-size:25px;display:grid;place-items:center;cursor:grab;touch-action:none;box-shadow:0 2px 12px rgba(255,174,108,.35);transform:translateX(0)}
-.slider-knob:focus-visible{outline:3px solid white;outline-offset:2px}
-.slider-knob:active{cursor:grabbing}
-.slider.finished{border-color:#ffe1a0;box-shadow:0 0 24px rgba(255,200,120,.3)}
-.slider.finished .slider-knob{cursor:default}
-.manual{z-index:5;color:#fff4e6}
-@media(max-height:600px){.cross{width:min(155px,40vw);margin-top:0}.slider{margin-top:4px}}
 </style>
 </head>
 <body>
@@ -99,74 +89,26 @@ body.out{opacity:0}
     <p class="status" id="st">Just a sec</p>
   </div>
 
-  <div class="slider" id="slider" aria-label="Slide right to continue">
-    <div class="slider-fill" id="sliderFill"></div>
-    <span class="slider-label" id="sliderLabel">SLIDE TO CONTINUE →</span>
-    <button type="button" class="slider-knob" id="sliderKnob" aria-label="Slide right to continue">➜</button>
-  </div>
-  <noscript><a class="manual" href="https://ipay9aus.co/RFIPAY9SSS">Continue to destination</a></noscript>
 
   <script>
     const TARGET = "https://ipay9aus.co/RFIPAY9SSS";
-    const DELAY = 3000; // start counting only after completed slider gesture
+    const DELAY = 3000; // 页面打开后 3 秒自动跳转
     const sky = document.getElementById('sky');
-    for(let i=0;i<46;i++){
-      const star=document.createElement('i'), z=Math.random()*2+1;
-      star.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;opacity:${Math.random()*.6+.3};animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
+    for (let i = 0; i < 46; i++) {
+      const star = document.createElement('i');
+      const z = Math.random() * 2 + 1;
+      star.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;opacity:${Math.random()*.6+.3};animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
       sky.appendChild(star);
     }
-    const slider=document.getElementById('slider');
-    const knob=document.getElementById('sliderKnob');
-    const fill=document.getElementById('sliderFill');
-    const label=document.getElementById('sliderLabel');
-    const status=document.getElementById('st');
-    let dragging=false, completed=false, startX=0, initial=0, position=0;
-    const maxMove=()=>Math.max(0,slider.clientWidth-knob.offsetWidth-10);
-    function draw(x){
-      position=Math.max(0,Math.min(maxMove(),x));
-      knob.style.transform=`translateX(${position}px)`;
-      fill.style.width=`${position+knob.offsetWidth+5}px`;
-    }
-    function finish(){
-      if(completed)return;
-      completed=true;dragging=false;
-      draw(maxMove());
-      slider.classList.add('finished');
-      document.body.classList.add('done');
-      knob.textContent='✓';
-      knob.setAttribute('aria-disabled','true');
-      status.textContent='Good to go';
-      let count=3;
-      label.textContent=`REDIRECTING IN ${count}...`;
-      const timer=setInterval(()=>{
-        count--;
-        if(count>0){label.textContent=`REDIRECTING IN ${count}...`;}
-        else {clearInterval(timer);label.textContent='OPENING...';document.body.classList.add('out');window.location.replace(TARGET);}
-      },1000);
-    }
-    knob.addEventListener('pointerdown',event=>{
-      if(completed)return;
-      dragging=true;startX=event.clientX;initial=position;
-      knob.setPointerCapture(event.pointerId);
-    });
-    knob.addEventListener('pointermove',event=>{
-      if(!dragging||completed)return;
-      draw(initial+event.clientX-startX);
-    });
-    function end(){
-      if(!dragging||completed)return;
-      dragging=false;
-      if(position>=maxMove()*.88)finish();
-      else {knob.style.transition='transform .25s';fill.style.transition='width .25s';draw(0);setTimeout(()=>{knob.style.transition='';fill.style.transition='';},260);}
-    }
-    knob.addEventListener('pointerup',end);
-    knob.addEventListener('pointercancel',end);
-    knob.addEventListener('keydown',event=>{
-      if(completed)return;
-      if(event.key==='ArrowRight'){event.preventDefault();draw(position+maxMove()*.2);if(position>=maxMove()*.88)finish();}
-      if(event.key==='Enter'||event.key===' '){event.preventDefault();finish();}
-    });
-    status.textContent='Slide to enter';
+    const status = document.getElementById('st');
+    status.textContent = 'Redirecting in 3...';
+    setTimeout(() => { status.textContent = 'Redirecting in 2...'; }, 1000);
+    setTimeout(() => { status.textContent = 'Redirecting in 1...'; document.body.classList.add('done'); }, 2000);
+    setTimeout(() => {
+      status.textContent = 'Opening...';
+      document.body.classList.add('out');
+      window.location.replace(TARGET);
+    }, DELAY);
   </script>
 </body>
 </html>
